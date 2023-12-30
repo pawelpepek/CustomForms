@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConcreteFormComponent } from './components/concrete-form/concrete-form.component';
 import { CustomFormsModule } from './components/core/forms/form.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent, ConcreteFormComponent],
@@ -17,6 +18,7 @@ import { CustomFormsModule } from './components/core/forms/form.module';
     ReactiveFormsModule,
     FormsModule,
     CustomFormsModule,
+    NgbModule,
   ],
   exports: [ConcreteFormComponent],
   bootstrap: [AppComponent],

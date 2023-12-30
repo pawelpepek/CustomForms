@@ -7,6 +7,9 @@ import { InputComponent } from './inputs/input/input.component';
 import { SelectComponent } from './inputs/select/select.component';
 import { InputBaseComponent } from './inputs/Input-base/input-base.component';
 import { InputWrapperComponent } from './inputs/Input-base/input-wraper.component';
+import { ToastsContainer } from './toast/toasts-container.component';
+import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgTemplateOutlet } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -16,8 +19,15 @@ import { InputWrapperComponent } from './inputs/Input-base/input-wraper.componen
     SelectComponent,
     InputBaseComponent,
     InputWrapperComponent,
+    ToastsContainer,
   ],
-  imports: [BrowserModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgbToastModule,
+    NgTemplateOutlet,
+  ],
   exports: [FormComponent, ButtonComponent, InputComponent, SelectComponent],
   providers: [],
 })
