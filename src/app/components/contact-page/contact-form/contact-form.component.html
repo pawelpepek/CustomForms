@@ -1,10 +1,10 @@
-<app-form [formGroup]="myForm">
+<app-form [formGroup]="myForm" [updateMethod]="contactService.save">
     <div class="d-flex flex-row">
         <div class="me-4 w-100">
             <app-input label="Imię" formControlName="firstName"></app-input>
             <app-input label="Nazwisko" formControlName="lastName"></app-input>
             <app-input label="Email" formControlName="email"></app-input>
-            <app-select label="Temat" formControlName="topic" [data]="topics"></app-select>
+            <app-select label="Stanowisko" formControlName="position" [data]="contactService.positions"></app-select>
         </div>
         <div formGroupName="address" class="ms-4 w-100">
             <app-input label="Kod pocztowy" formControlName="zip"></app-input>
