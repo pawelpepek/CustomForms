@@ -1,0 +1,13 @@
+.input-group {
+  min-height: 90px;
+}
+label {
+  background-color: transparent;
+}
+.label::after {
+  background-color: transparent !important;
+}
+.not-selected label {
+  color: inherit;
+  transform: none;
+}

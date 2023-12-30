@@ -1,0 +1,5 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="d-flex flex-column">
+  <ng-content *ngIf="!!formGroup"></ng-content>
+  <app-button type="submit" class="m-2" label="Zapisz"></app-button>
+  <app-button type="button" color="warning" class="m-2" (click)="cleanErrors()" label="Wyczyść błędy"></app-button>
+</form>
