@@ -2,7 +2,7 @@
     <div class="form-floating d-block" *ngIf="!!formGroup" [formGroup]="formGroup"
         [ngClass]="{'is-invalid':showError,'not-selected':notSelected }">
         <ng-content></ng-content>
-        <label class="label" [for]="name">{{label}}</label>
+        <label class="label" [for]="name">{{controlLabel}}</label>
     </div>
     <div class="invalid-feedback mb-1">
         {{errorMessage}}

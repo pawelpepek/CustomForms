@@ -1,5 +1,5 @@
 <app-input-wrapper *ngIf="!!formGroup" [formGroup]="formGroup" [errorMessage]="errorMessage()" [label]="label"
-    name="input" [showError]="showError()">
+    name="input" [showError]="showError()" [required]="required">
     <input type="text" class="form-control" [placeholder]="label" [formControlName]="formControlName" name="input"
         [ngClass]="{'is-invalid':showError ()}">
 </app-input-wrapper>

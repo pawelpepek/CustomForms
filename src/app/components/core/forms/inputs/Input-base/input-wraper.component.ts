@@ -13,4 +13,9 @@ export class InputWrapperComponent {
   @Input() label!: string;
   @Input() name!: string;
   @Input() notSelected = false;
+  @Input() required = false;
+
+  get controlLabel(): string {
+    return `${this.label}${this.required ? '*' : ''}`;
+  }
 }
