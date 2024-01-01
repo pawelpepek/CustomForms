@@ -1,29 +1,27 @@
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 export interface ErrorMessage {
   message: string;
 }
 
 export class CustomValidators {
-  public static maxLengthFunction(
+  public static maxLengthFunction = (
     length: number,
     control: AbstractControl
-  ): Promise<ValidationErrors | null> | null {
+  ): ValidationErrors | null => {
     const value = control.value + '';
-
     const result = CustomValidators.getErrorMessage(
       value && value.length > length,
       `Długość tekstu pola "{field}" nie może być większa niż ${length}`
     );
 
-    return Promise.resolve(result);
-  }
+    return result;
+  };
 
-  public static maxLength(length: number) {
+  public static maxLength = (length: number) => {
     return (control: AbstractControl) =>
       CustomValidators.maxLengthFunction(length, control);
-  }
+  };
 
   public static required(control: AbstractControl): ValidationErrors | null {
     const req = Validators.required(control) as { required: boolean };
@@ -43,6 +41,7 @@ export class CustomValidators {
     );
   }
 
-  private static getErrorMessage = (value: any, message: string) =>
-    !!value ? { message } : null;
+  private static getErrorMessage = (value: any, message: string) => {
+    return !!value ? { message } : null;
+  };
 }

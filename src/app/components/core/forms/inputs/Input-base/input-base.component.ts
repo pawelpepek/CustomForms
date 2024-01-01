@@ -1,10 +1,12 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Injector,
   Input,
   OnInit,
   Optional,
+  Output,
   Self,
 } from '@angular/core';
 import {
@@ -24,11 +26,11 @@ export class InputBaseComponent
 {
   @Input() label!: string;
   @Input() formControlName!: string;
+  @Output() changed = new EventEmitter<any>();
 
   value: any;
   onChange: any = () => {};
   onTouch: any = () => {};
-
   ngControl: NgControl | null = null;
   formGroup?: FormGroup;
 
@@ -42,9 +44,20 @@ export class InputBaseComponent
     return this.formGroup?.get(this.formControlName);
   }
 
+  public get required(): boolean {
+    if (!!this.control) {
+      const validators = (this.control as any)._rawValidators as any[];
+      return validators.some((v) => v.toString().startsWith('required('));
+    }
+    return false;
+  }
+
   ngAfterViewInit(): void {
-    setInterval(() => {
+    setTimeout(() => {
       this.formGroup = this.ngControl?.control?.parent as FormGroup;
+      this.control?.valueChanges.subscribe((value) => {
+        this.changed?.emit(value);
+      });
     }, 20);
   }
   ngOnInit(): void {
@@ -68,11 +81,13 @@ export class InputBaseComponent
   showError = (): boolean => {
     return !!this.control && this.control?.touched && this.control?.invalid;
   };
-  errorMessage = (): string =>
-    (this.control?.errors as { message: string })?.message?.replace(
+  errorMessage = (): string =>{
+    // console.log(this.control?.errors)
+    return (this.control?.errors as { message: string })?.message?.replace(
       '{field}',
       this.label
     );
+  }
 
   keyPress(keyEvent: KeyboardEvent): void {
     const key = keyEvent.key.toLowerCase();
