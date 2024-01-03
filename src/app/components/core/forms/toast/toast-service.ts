@@ -1,16 +1,18 @@
 import { Injectable, TemplateRef } from '@angular/core';
 
 export interface Toast {
-  template: TemplateRef<any>;
   classname?: string;
   delay?: number;
+  label: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
   toasts: Toast[] = [];
 
-  show(toast: Toast): void {
+  lastMessage: string = '';
+
+  private show(toast: Toast): void {
     this.toasts.push(toast);
   }
 
@@ -20,5 +22,13 @@ export class ToastService {
 
   clear(): void {
     this.toasts.splice(0, this.toasts.length);
+  }
+
+  public showToast(color: 'success' | 'danger' | 'primary', label: string): void {
+    this.show({
+      classname: `bg-${color} text-light`,
+      delay: 5000,
+      label,
+    });
   }
 }

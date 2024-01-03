@@ -2,48 +2,36 @@ import { Component, Input, TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ToastService } from './toast/toast-service';
 import { Observable } from 'rxjs';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
 })
-export class FormComponent {
+export class FormComponent<T> {
   @Input() formGroup!: FormGroup;
-  @Input() updateMethod?: (data: any) => Observable<any>;
+  @Input() service!: DataService<T>;
+  @Input() clearButton: boolean = false;
+  @Input() refreshButton: boolean = false;
 
   constructor(private toastService: ToastService) {}
 
-  onSubmit(
-    templateSuccess: TemplateRef<any>,
-    templateError: TemplateRef<any>
-  ): void {
+  onSubmit(): void {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
-      this.showToast(templateError, 'danger');
+      this.toastService.showToast('danger', 'Występują błedy w formularzu');
     } else {
-      if (!!this.updateMethod) {
-        this.updateMethod(this.formGroup.getRawValue()).subscribe((res) => {
-          if (!!res) {
-            this.showToast(templateSuccess, 'success');
-            // this.formGroup.reset();
-          }
-        });
-      }
+      this.service.save(this.formGroup.getRawValue()).subscribe();
     }
   }
 
-  cleanErrors(): void {
+  clear(): void {
     this.formGroup.markAsUntouched();
+    this.service.reset()
   }
 
-  private showToast(
-    template: TemplateRef<any>,
-    color: 'success' | 'danger'
-  ): void {
-    this.toastService.show({
-      template,
-      classname: `bg-${color} text-light`,
-      delay: 5000,
-    });
+  refresh(): void {
+    this.formGroup.markAsUntouched();
+    this.service.load();
   }
 }

@@ -4,6 +4,8 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroupSchema } from '../components/core/forms/models/FormGroupBuilder';
 import { CustomValidators } from '../components/core/forms/models/Validators';
 import { DataService } from '../components/core/forms/data.service';
+import { Observable, delay, of } from 'rxjs';
+import { ToastService } from '../components/core/forms/toast/toast-service';
 
 @Injectable({ providedIn: 'root' })
 export class ContactService extends DataService<Contact> {
@@ -26,13 +28,18 @@ export class ContactService extends DataService<Contact> {
     },
   };
 
-  constructor(fb: FormBuilder) {
-    super(fb);
+  constructor(fb: FormBuilder, toastService:ToastService) {
+    super(fb, toastService);
     this.initSchema(this.formSchema);
+    this.updateItemMethod = this.updateItem;
   }
 
-  protected override prepareData(formData: any, data: Contact): void {
+  protected override prepareItem(formData: any, data: Contact): void {
     const position = this.positions.find((p) => p.value == formData.position);
     if (!!position) data.position = position;
   }
+
+  updateItem = (data: Contact): Observable<boolean> => {
+    return of(true).pipe(delay(500));
+  };
 }

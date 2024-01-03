@@ -11,7 +11,10 @@ import { ToastService } from './toast-service';
       [delay]="toast.delay || 5000"
       (hidden)="toastService.remove(toast)"
     >
-      <ng-template [ngTemplateOutlet]="toast.template"></ng-template>
+      <div>
+        {{ toast.label }}
+      </div>
+      <!-- <ng-template [ngTemplateOutlet]="toast.template"></ng-template> -->
     </ngb-toast>
     }
   `,

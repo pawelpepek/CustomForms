@@ -82,7 +82,6 @@ export class InputBaseComponent
     return !!this.control && this.control?.touched && this.control?.invalid;
   };
   errorMessage = (): string =>{
-    // console.log(this.control?.errors)
     return (this.control?.errors as { message: string })?.message?.replace(
       '{field}',
       this.label

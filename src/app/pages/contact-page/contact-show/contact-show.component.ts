@@ -10,7 +10,7 @@ export class ContactShowComponent {
   contact?: Contact;
 
   constructor(contactService: ContactService) {
-    contactService.data.subscribe((contact) => {
+    contactService.selectedItem.subscribe((contact) => {
       this.contact = contact;
     });
   }
