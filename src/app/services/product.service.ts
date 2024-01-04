@@ -25,8 +25,6 @@ export class ProductService extends DataService<Product> {
     this.load();
   }
 
-  protected override prepareItem(formData: any, data: Product): void {}
-
   updateItem = (data: Product): Observable<boolean> => {
     return of(true).pipe(delay(500));
   };

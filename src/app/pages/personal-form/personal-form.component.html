@@ -1,10 +1,22 @@
-<app-card label="Prosty formularz"><app-form [formGroup]="contactService.form" [service]="contactService">
+<ng-template #personal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{personalService.selectedItem.value?.firstName}}
+            {{personalService.selectedItem.value?.lastName}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-personal-show></app-personal-show>
+    </div>
+</ng-template>
+
+<app-card label="Bardziej złożony formularz do zapisu">
+    <app-form [formGroup]="personalService.form" [service]="personalService">
         <div class="d-flex flex-row">
             <div class="me-2 w-100">
                 <app-input label="Imię" formControlName="firstName" (changed)="onChangedName($event)"></app-input>
                 <app-input label="Nazwisko" formControlName="lastName"></app-input>
                 <app-input label="Email" formControlName="email"></app-input>
-                <app-select label="Stanowisko" formControlName="position" [data]="contactService.positions"
+                <app-select label="Stanowisko" formControlName="position" [data]="personalService.positions"
                     (changed)="onChangedList($event)"></app-select>
             </div>
             <div formGroupName="address" class="ms-2 w-100">
@@ -13,4 +25,5 @@
                 <app-input label="Ulica" formControlName="street"></app-input>
             </div>
         </div>
-    </app-form></app-card>
+    </app-form>
+</app-card>

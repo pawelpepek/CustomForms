@@ -23,7 +23,9 @@ export abstract class DataService<T> {
     this.selectedItem.subscribe((item) => {
       if (!this.myForm) return;
       if (!!item) {
+        console.log(item)
         const value = item as object;
+        this.prepareForm(value, item);
         this.myForm.patchValue(value);
       } else {
         this.myForm.reset();
@@ -73,5 +75,6 @@ export abstract class DataService<T> {
     return this.selectedItem.pipe(first());
   };
 
-  protected abstract prepareItem(formData: any, data: T): void;
+  protected prepareItem(formData: any, item: T): void {}
+  protected prepareForm(formData: any, item: T): void {}
 }

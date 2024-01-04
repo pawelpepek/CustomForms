@@ -1,0 +1,20 @@
+<ng-template #contact let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{contactService.selectedItem.value?.firstName}}
+            {{contactService.selectedItem.value?.lastName}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <h5>{{contactService.selectedItem.value?.email}}</h5>
+    </div>
+</ng-template>
+
+<app-card label="Prosty formularz">
+    <app-form [formGroup]="contactService.form" [service]="contactService">
+        <div class="d-flex flex-column">
+            <app-input label="Imię" formControlName="firstName"></app-input>
+            <app-input label="Nazwisko" formControlName="lastName"></app-input>
+            <app-input label="Email" formControlName="email"></app-input>
+        </div>
+    </app-form>
+</app-card>

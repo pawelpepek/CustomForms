@@ -28,6 +28,7 @@ export class InputBaseComponent
   @Input() formControlName!: string;
   @Output() changed = new EventEmitter<any>();
 
+  private lastValue: any;
   value: any;
   onChange: any = () => {};
   onTouch: any = () => {};
@@ -56,9 +57,12 @@ export class InputBaseComponent
     setTimeout(() => {
       this.formGroup = this.ngControl?.control?.parent as FormGroup;
       this.control?.valueChanges.subscribe((value) => {
-        this.changed?.emit(value);
+        if (value != this.lastValue) {
+          this.changed?.emit(value);
+        }
+        this.lastValue = value;
       });
-    }, 20);
+    }, 10);
   }
   ngOnInit(): void {
     this.ngControl = this.injector.get(NgControl, null);
@@ -81,12 +85,12 @@ export class InputBaseComponent
   showError = (): boolean => {
     return !!this.control && this.control?.touched && this.control?.invalid;
   };
-  errorMessage = (): string =>{
+  errorMessage = (): string => {
     return (this.control?.errors as { message: string })?.message?.replace(
       '{field}',
       this.label
     );
-  }
+  };
 
   keyPress(keyEvent: KeyboardEvent): void {
     const key = keyEvent.key.toLowerCase();
