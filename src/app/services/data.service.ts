@@ -1,13 +1,14 @@
-import { BehaviorSubject, Observable, Subject, first, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormGroupBuilder, FormGroupSchema } from './models/FormGroupBuilder';
-import { ToastService } from './toast/toast-service';
-import { AppModule } from '../../app.module';
-import { Alias } from './models/Alias';
 import {
-  CopyObjectIntoObject,
-  IsObjectsEquals,
-} from '../../helpers/Comparision';
+  FormGroupBuilder,
+  FormGroupSchema,
+} from '../components/forms/models/FormGroupBuilder';
+import { ToastService } from '../components/forms/toast/toast-service';
+import { AppModule } from '../app.module';
+import { Alias } from '../components/forms/models/Alias';
+import { CopyObjectIntoObject, IsObjectsEquals } from '../helpers/Comparision';
+import { ConfirmService } from './confirm.service';
 
 export abstract class DataService<T> {
   protected myForm!: FormGroup;
@@ -25,8 +26,9 @@ export abstract class DataService<T> {
   protected addItemMethod?: (data: T) => Observable<T>;
   protected deleteItemMethod?: (data: T) => Observable<boolean>;
 
-  protected fb: FormBuilder;
-  protected toastService: ToastService;
+  private fb: FormBuilder;
+  private toastService: ToastService;
+  private confirmService: ConfirmService;
 
   public get form() {
     return this.myForm;
@@ -35,6 +37,7 @@ export abstract class DataService<T> {
   constructor() {
     this.fb = AppModule.injector.get(FormBuilder);
     this.toastService = AppModule.injector.get(ToastService);
+    this.confirmService = AppModule.injector.get(ConfirmService);
 
     this.selectedItem.subscribe(this.loadSelected);
   }
@@ -49,6 +52,7 @@ export abstract class DataService<T> {
   public clearSelection = () => this.selectedItem.next(undefined);
   public addButtonVisible = () =>
     !!this.addItemMethod && !!this.updateItemMethod;
+  public deleteButtonVisible = () => !!this.deleteItemMethod;
 
   private loadSelected = (item: T | undefined) => {
     if (!this.myForm) return;
@@ -72,6 +76,28 @@ export abstract class DataService<T> {
         });
       }
     }
+  }
+
+  public delete(row: T): void {
+    this.confirmService
+      .showModal('Czy na pewno usunąć zaznaczoną pozycję?')
+      .subscribe((answer) => {
+        if (answer && !!this.deleteItemMethod) {
+          this.loaded = true;
+          this.deleteItemMethod(row).subscribe((res) => {
+            if (res) {
+              this.items.next(
+                this.items.value.filter((item) => !IsObjectsEquals(row, item))
+              );
+              this.selectedItem.next(undefined);
+              this.toastService.showToast('success', 'Dane zostały usunięte');
+              this.loaded = false;
+            } else {
+              this.finalizeError();
+            }
+          });
+        }
+      });
   }
 
   public save = (formData: any): Observable<any> | null => {
@@ -140,14 +166,14 @@ export abstract class DataService<T> {
     return null;
   }
 
-  private replaceSelectedItem(data: T) {
+  private replaceSelectedItem(data: T | undefined) {
     const indexToReplace = this.items.value.findIndex((item) =>
       IsObjectsEquals(this.selectedItem.value, item)
     );
 
     if (indexToReplace >= 0) {
       const items = [...this.items.value];
-      items[indexToReplace] = data;
+      if (!!data) items[indexToReplace] = data;
 
       this.items.next(items);
     }

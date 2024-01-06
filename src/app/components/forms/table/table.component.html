@@ -2,12 +2,16 @@
     <thead>
         <tr>
             <th *ngFor="let column of service.tableAliases" scope="col" class="bg-primary-subtle">{{column.text}}</th>
+            <th scope="col" *ngIf="service.deleteButtonVisible()" class="bg-primary-subtle"></th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let row of service.items.value" (click)="onClick(row)"
             [ngClass]="{'selected-row':isRowSelected(row)}">
             <td *ngFor="let column of service.tableAliases">{{service.value(row, column.value)}}</td>
+            <td *ngIf="service.deleteButtonVisible()">
+                <app-delete-button (delete)="onDelete(row)"></app-delete-button>
+            </td>
         </tr>
     </tbody>
 </table>

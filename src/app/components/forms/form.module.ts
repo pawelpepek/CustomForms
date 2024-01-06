@@ -10,6 +10,8 @@ import { InputWrapperComponent } from './inputs/Input-base/input-wraper.componen
 import { ToastsContainer } from './toast/toasts-container.component';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgTemplateOutlet } from '@angular/common';
+import { TableComponent } from './table/table.component';
+import { DeleteButtonComponent } from './table/delete-button/delete-button.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { NgTemplateOutlet } from '@angular/common';
     InputBaseComponent,
     InputWrapperComponent,
     ToastsContainer,
+    TableComponent,
+    DeleteButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,7 @@ import { NgTemplateOutlet } from '@angular/common';
     NgbToastModule,
     NgTemplateOutlet,
   ],
-  exports: [FormComponent, ButtonComponent, InputComponent, SelectComponent],
+  exports: [FormComponent, ButtonComponent, InputComponent, SelectComponent, TableComponent],
   providers: [],
 })
 export class CustomFormsModule {}

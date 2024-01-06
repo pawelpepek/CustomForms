@@ -1,7 +1,0 @@
-<app-form [formGroup]="todoService.form" [service]="todoService" [clearButton]="true">
-    <div class="d-flex flex-row">
-        <app-input label="Opis" class="w-100 me-2" formControlName="description"></app-input>
-        <app-select label="Priorytet" [style]="{width:'150px'}" formControlName="priority"
-            [data]="priorities"></app-select>
-    </div>
-</app-form>

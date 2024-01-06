@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { ToDoService } from '../../services/todo.service';
+import { Priorities } from '../../data/Priorities';
 
 @Component({
   selector: 'app-todo-page',
-  template: `<app-card label="Pełny model CRUD">
-    <app-todo-form> </app-todo-form>
-    <app-todo-table></app-todo-table>
-  </app-card>`,
+  templateUrl: `./todo-page.component.html`,
 })
-export class ToDoPageComponent {}
+export class ToDoPageComponent {
+  priorities = Priorities.data;
+  constructor(public service: ToDoService) {}
+}

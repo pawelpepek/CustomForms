@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
 import { CustomValidators } from '../components/forms/models/Validators';
-import { DataService } from '../components/forms/data.service';
+import { DataService } from './data.service';
 import { Observable } from 'rxjs';
 import { Person } from '../models/Person';
 import { ModalService } from './modal.service';

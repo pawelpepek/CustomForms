@@ -1,4 +1,5 @@
 export function IsObjectsEquals(obj1: any, obj2: any) {
+  if (!obj1 || !obj2) return false;
   if (!obj1['id'] && !obj2['id']) return obj1['id'] == obj2['id'];
 
   const serialized1 = JSON.stringify(obj1);

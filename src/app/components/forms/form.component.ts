@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ToastService } from './toast/toast-service';
-import { DataService } from './data.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-form',

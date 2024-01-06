@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable, delay, of } from 'rxjs';
 
+type HasIdProperty<T> = T extends { id: any } ? true : false;
+
 @Injectable({ providedIn: 'root' })
 export class RequestService<T> {
   updateItem = (data: T): Observable<boolean> => this.delayRequest(true);
 
-  addItem = (data: T): Observable<T> => {
-    const dataAny = data as any;
+  addItem=(id: keyof T)=>{
+    return (data:T)=>this.addItemMethod(data,id)
+  }
 
-    if ('id' in dataAny) {
-      dataAny['id'] = Number.MAX_VALUE * Math.random();
-    }
+  addItemMethod = (data: T, id: keyof T): Observable<T> => {
+    (data as any)[id] = Number.MAX_VALUE * Math.random();
 
-    return this.delayRequest(dataAny as T);
+    return this.delayRequest(data);
   };
 
   deleteItem = (data: T): Observable<boolean> => this.delayRequest(true);

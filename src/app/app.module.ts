@@ -6,16 +6,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactFormComponent } from './pages/contact-form/contact-form.component';
-import { CustomFormsModule } from './components/forms/form.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductFormComponent } from './pages/product-form/product-form.component';
 import { CardComponent } from './components/card/card.component';
 import { PersonalShowComponent } from './pages/personal-form/personal-show/personal-show.component';
 import { PersonalFormComponent } from './pages/personal-form/personal-form.component';
-import { ToDoFormComponent } from './pages/todo-page/todo-form/todo-form.component';
 import { ToDoPageComponent } from './pages/todo-page/todo-page.component';
-import { TableComponent } from './components/table/table.component';
-import { ToDoTableComponent } from './pages/todo-page/todo-table/todo-table.component';
+import { ComponentsModule } from './components/components.module';
+import { CustomFormsModule } from './components/forms/form.module';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +24,8 @@ import { ToDoTableComponent } from './pages/todo-page/todo-table/todo-table.comp
     CardComponent,
     PersonalFormComponent,
     PersonalShowComponent,
-    ToDoFormComponent,
     ToDoPageComponent,
-    TableComponent,
-    ToDoTableComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -36,17 +33,15 @@ import { ToDoTableComponent } from './pages/todo-page/todo-table/todo-table.comp
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    CustomFormsModule,
     NgbModule,
+    ComponentsModule,
+    CustomFormsModule
   ],
   exports: [
     ContactFormComponent,
     ContactFormComponent,
     ProductFormComponent,
-    ToDoFormComponent,
     ToDoPageComponent,
-    TableComponent,
-    ToDoTableComponent,
   ],
   bootstrap: [AppComponent],
 })

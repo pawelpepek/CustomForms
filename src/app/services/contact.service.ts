@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Contact } from '../models/Contact';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
 import { CustomValidators } from '../components/forms/models/Validators';
-import { DataService } from '../components/forms/data.service';
-import { Observable} from 'rxjs';
+import { DataService } from './data.service';
+import { Observable } from 'rxjs';
 import { ModalService } from './modal.service';
 import { RequestService } from './requests.service';
 
@@ -31,6 +31,6 @@ export class ContactService extends DataService<Contact> {
   updateItem = (data: Contact): Observable<boolean> => {
     return this.requestService
       .updateItem(data)
-      .pipe(this.modalService.modalTap("contact"));
+      .pipe(this.modalService.modalTap('contact'));
   };
 }

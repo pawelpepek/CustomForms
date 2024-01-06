@@ -1,0 +1,13 @@
+<ng-template #confirm let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Usuwanie pozycji</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="no(modal)"></button>
+    </div>
+    <div class="modal-body">
+        <h6>{{confirmService.question}}</h6>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success w-25" (click)="ok(modal)">Tak</button>
+        <button type="button" class="btn btn-warning w-25" (click)="no(modal)">Nie</button>
+    </div>
+</ng-template>

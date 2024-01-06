@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { DataService } from '../forms/data.service';
-import { IsObjectsEquals } from '../../helpers/Comparision';
+import { DataService } from '../../../services/data.service';
+import { IsObjectsEquals } from '../../../helpers/Comparision';
 
 @Component({
   selector: 'app-table',
@@ -15,5 +15,8 @@ export class TableComponent<T> {
 
   onClick(row: T) {
     this.service.selectedItem.next(row);
+  }
+  onDelete(row: T) {
+    this.service.delete(row);
   }
 }
