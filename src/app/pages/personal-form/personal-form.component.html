@@ -16,7 +16,7 @@
                 <app-input label="Imię" formControlName="firstName" (changed)="onChangedName($event)"></app-input>
                 <app-input label="Nazwisko" formControlName="lastName"></app-input>
                 <app-input label="Email" formControlName="email"></app-input>
-                <app-select label="Stanowisko" formControlName="position" [data]="personalService.positions"
+                <app-select label="Stanowisko" formControlName="position" [data]="positions"
                     (changed)="onChangedList($event)"></app-select>
             </div>
             <div formGroupName="address" class="ms-2 w-100">

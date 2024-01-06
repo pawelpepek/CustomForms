@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Contact } from '../models/Contact';
-import { FormBuilder } from '@angular/forms';
-import { FormGroupSchema } from '../components/core/forms/models/FormGroupBuilder';
-import { CustomValidators } from '../components/core/forms/models/Validators';
-import { DataService } from '../components/core/forms/data.service';
+import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
+import { CustomValidators } from '../components/forms/models/Validators';
+import { DataService } from '../components/forms/data.service';
 import { Observable} from 'rxjs';
-import { ToastService } from '../components/core/forms/toast/toast-service';
 import { ModalService } from './modal.service';
 import { RequestService } from './requests.service';
 
@@ -18,12 +16,10 @@ export class ContactService extends DataService<Contact> {
   };
 
   constructor(
-    fb: FormBuilder,
-    toastService: ToastService,
     private ownModalService: ModalService,
     private requestService: RequestService<Contact>
   ) {
-    super(fb, toastService);
+    super();
     this.initSchema(this.formSchema);
     this.updateItemMethod = this.updateItem;
   }

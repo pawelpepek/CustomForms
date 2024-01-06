@@ -1,0 +1,11 @@
+tbody tr {
+  cursor: pointer;
+}
+
+tbody tr:hover > td {
+  color: rgb(var(--bs-primary-rgb));
+}
+
+.selected-row > td {
+  background-color: var(--bs-success-bg-subtle)
+}

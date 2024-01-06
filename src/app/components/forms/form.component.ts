@@ -1,7 +1,6 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ToastService } from './toast/toast-service';
-import { Observable } from 'rxjs';
 import { DataService } from './data.service';
 
 @Component({
@@ -21,13 +20,13 @@ export class FormComponent<T> {
       this.formGroup.markAllAsTouched();
       this.toastService.showToast('danger', 'Występują błedy w formularzu');
     } else {
-      this.service.save(this.formGroup.getRawValue()).subscribe();
+      this.service.save(this.formGroup.getRawValue())?.subscribe();
     }
   }
 
   clear(): void {
     this.formGroup.markAsUntouched();
-    this.service.reset()
+    this.service.reset();
   }
 
   refresh(): void {

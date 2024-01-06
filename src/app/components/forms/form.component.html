@@ -2,6 +2,8 @@
   <ng-content *ngIf="!!formGroup"></ng-content>
   <app-button [disabled]="service.loaded" *ngIf="service.saveVisible()" type="submit" class="m-2"
     label="Zapisz"></app-button>
+  <app-button *ngIf="service.addButtonVisible()" [disabled]="service.loaded" type="button" color="success" class="m-2"
+    (onClick)="service.clearSelection()" label="Dodaj nowy"></app-button>
   <app-button *ngIf="clearButton" [disabled]="service.loaded" type="button" color="warning" class="m-2"
     (onClick)="clear()" label="Wyczyść"></app-button>
   <app-button *ngIf="refreshButton" [disabled]="service.loaded" type="button" color="success" class="m-2"

@@ -1,7 +1,7 @@
 <app-input-wrapper *ngIf="!!formGroup" [formGroup]="formGroup" [errorMessage]="errorMessage()" [label]="label"
   name="select" [showError]="showError()" [notSelected]="notSelected()" [required]="required">
-  <select class="form-select" aria-label="Default select example" name="select" (change)="change($event.target)"
-    [formControlName]="formControlName" (keydown)="keyPress($event)" [ngClass]="{'is-invalid':showError()}">
+  <select class="form-select" aria-label="Default select example" name="select"
+    [formControlName]="formControlName" (keydown)="keyPress($event)" [ngClass]="{'is-invalid':showError()}" (ngModelChange)="onModelChange($event)">
     <option selected></option>
     <option *ngFor="let item of data" [value]="item.value">{{item.text}}</option>
   </select>

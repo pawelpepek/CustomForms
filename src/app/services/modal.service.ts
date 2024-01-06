@@ -18,7 +18,7 @@ export class ModalService {
 
   public showModal = (name: string) => {
     setTimeout(() => {
-      this.ngModalService.open(this.dialogRefs[name]);
+      this.ngModalService.open(this.dialogRefs[name], { centered: true });
     }, 10);
   };
 

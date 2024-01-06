@@ -4,8 +4,9 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { ToastService } from '../../components/core/forms/toast/toast-service';
+import { ToastService } from '../../components/forms/toast/toast-service';
 import { PersonalService } from '../../services/personal.service';
+import { Positions } from '../../data/Positions';
 
 @Component({
   selector: 'app-personal-form',
@@ -13,6 +14,8 @@ import { PersonalService } from '../../services/personal.service';
 })
 export class PersonalFormComponent implements AfterViewInit {
   @ViewChild('personal') modal!: TemplateRef<any>;
+
+  positions = Positions.data;
   constructor(
     public personalService: PersonalService,
     private toastService: ToastService

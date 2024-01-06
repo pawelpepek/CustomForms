@@ -1,23 +1,15 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { FormGroupSchema } from '../components/core/forms/models/FormGroupBuilder';
-import { CustomValidators } from '../components/core/forms/models/Validators';
-import { DataService } from '../components/core/forms/data.service';
+import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
+import { CustomValidators } from '../components/forms/models/Validators';
+import { DataService } from '../components/forms/data.service';
 import { Observable } from 'rxjs';
-import { ToastService } from '../components/core/forms/toast/toast-service';
 import { Person } from '../models/Person';
 import { ModalService } from './modal.service';
 import { RequestService } from './requests.service';
+import { Positions } from '../data/Positions';
 
 @Injectable({ providedIn: 'root' })
 export class PersonalService extends DataService<Person> {
-  public positions = [
-    { value: 1, text: 'Robotnik budowlany' },
-    { value: 2, text: 'Kierownik budowy' },
-    { value: 3, text: 'Kierowca' },
-    { value: 4, text: 'Pracownik biurowy' },
-  ];
-
   private formSchema: FormGroupSchema = {
     firstName: [CustomValidators.required],
     lastName: [CustomValidators.required],
@@ -31,18 +23,16 @@ export class PersonalService extends DataService<Person> {
   };
 
   constructor(
-    fb: FormBuilder,
-    toastService: ToastService,
     private ownModalService: ModalService,
     private requestService: RequestService<Person>
   ) {
-    super(fb, toastService);
+    super();
     this.initSchema(this.formSchema);
     this.updateItemMethod = this.updateItem;
   }
 
   protected override prepareItem(formData: any, item: Person): void {
-    const position = this.positions.find((p) => p.value == formData.position);
+    const position = Positions.data.find((p) => p.value == formData.position);
     if (!!position) item.position = position;
   }
 

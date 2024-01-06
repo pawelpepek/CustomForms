@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/Product';
-import { DataService } from '../components/core/forms/data.service';
-import { FormBuilder } from '@angular/forms';
-import { CustomValidators } from '../components/core/forms/models/Validators';
-import { FormGroupSchema } from '../components/core/forms/models/FormGroupBuilder';
-import { ToastService } from '../components/core/forms/toast/toast-service';
+import { DataService } from '../components/forms/data.service';
+import { CustomValidators } from '../components/forms/models/Validators';
+import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
 import { Observable, delay, first, of, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -17,8 +15,8 @@ export class ProductService extends DataService<Product> {
 
   private init = false;
 
-  constructor(fb: FormBuilder, toastService: ToastService) {
-    super(fb, toastService);
+  constructor() {
+    super();
     this.initSchema(this.formSchema);
     this.updateItemMethod = this.updateItem;
     this.fetchInitMethod = this.fetchItem;

@@ -27,8 +27,9 @@ export class SelectComponent
   @Input() data: { value: any; text: string }[] = [];
   private selectedIndex = 0;
 
-  change(target: any): void {
-    this.selectedIndex = target.selectedIndex;
+  onModelChange(index:number){
+    this.selectedIndex = index
   }
+
   notSelected = (): boolean => this.selectedIndex == 0;
 }
