@@ -99,17 +99,22 @@ export abstract class DataServiceBase<T> {
       .subscribe((answer) => {
         if (answer && !!this.deleteItemMethod) {
           this.loaded = true;
-          this.deleteItemMethod(row).subscribe((res) => {
-            if (res) {
-              this.items.next(
-                this.items.value.filter((item) => !IsObjectsEquals(row, item))
-              );
-              this.selectedItem.next(undefined);
-              this.toastService.showToast('success', 'Dane zostały usunięte');
-              this.loaded = false;
-            } else {
+          this.deleteItemMethod(row).subscribe({
+            next: (res) => {
+              if (res) {
+                this.items.next(
+                  this.items.value.filter((item) => !IsObjectsEquals(row, item))
+                );
+                this.selectedItem.next(undefined);
+                this.toastService.showToast('success', 'Dane zostały usunięte');
+                this.loaded = false;
+              } else {
+                this.finalizeError();
+              }
+            },
+            error: () => {
               this.finalizeError();
-            }
+            },
           });
         }
       });
@@ -165,8 +170,11 @@ export abstract class DataServiceBase<T> {
     this.loaded = false;
   }
 
-  private finalizeError(): null {
-    this.toastService.showToast('danger', 'Dane nie zostały zapisane');
+  protected finalizeError(): null {
+    this.toastService.showToast(
+      'danger',
+      'Wystąpił błąd. Dane nie zostały zapisane'
+    );
     this.loaded = false;
     return null;
   }

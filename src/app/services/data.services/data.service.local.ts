@@ -1,4 +1,4 @@
-import { Observable, tap } from 'rxjs';
+import { Observable, mergeMap, tap } from 'rxjs';
 import { DataServiceBase } from './data.service.base';
 
 export abstract class DataServiceLocal<T> extends DataServiceBase<T> {
@@ -8,15 +8,18 @@ export abstract class DataServiceLocal<T> extends DataServiceBase<T> {
   protected override isAddMethod = (): boolean => !!this.addItemMethod;
   protected override isUpdateMethod = (): boolean => !!this.updateItemMethod;
 
-  protected override addItem(item: T): Observable<any> | null {
+  protected override addItem(item: T): Observable<T> | null {
     if (!this.addItemMethod) return null;
 
     return this.addItemMethod(item).pipe(
-      tap((res) => {
+      tap((res: T) => {
         if (res) {
           this.finalizeSuccess(res);
           this.items.next([...this.items.value, res]);
         }
+      }),
+      tap(undefined, (error) => {
+        this.finalizeError();
       })
     );
   }
@@ -24,11 +27,14 @@ export abstract class DataServiceLocal<T> extends DataServiceBase<T> {
     if (!this.updateItemMethod) return null;
 
     return this.updateItemMethod(item).pipe(
-      tap((res) => {
+      tap((res: boolean) => {
         if (res) {
           this.replaceSelectedItem(item);
           this.finalizeSuccess(item);
         }
+      }),
+      tap(undefined, (error) => {
+        this.finalizeError();
       })
     );
   }

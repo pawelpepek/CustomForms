@@ -1,4 +1,4 @@
-import { Observable, tap } from 'rxjs';
+import { Observable, catchError, mergeMap, tap } from 'rxjs';
 import { DataServiceBase } from './data.service.base';
 import { IsObjectsEquals } from '../../helpers/Comparision';
 
@@ -23,6 +23,9 @@ export abstract class DataServiceRefresh<T> extends DataServiceBase<T> {
           this.items.next(res.items);
           this.finalizeSuccess(res.item);
         }
+      }),
+      tap(undefined, (error) => {
+        this.finalizeError();
       })
     );
   }
@@ -36,6 +39,9 @@ export abstract class DataServiceRefresh<T> extends DataServiceBase<T> {
           const selectedItem = res.find((r) => IsObjectsEquals(item, r));
           if (!!selectedItem) this.finalizeSuccess(selectedItem);
         }
+      }),
+      tap(undefined, (error) => {
+        this.finalizeError();
       })
     );
   }
