@@ -12,9 +12,9 @@ import { CardComponent } from './components/card/card.component';
 import { PersonalShowComponent } from './pages/personal-form/personal-show/personal-show.component';
 import { PersonalFormComponent } from './pages/personal-form/personal-form.component';
 import { ToDoPageComponent } from './pages/todo-page/todo-page.component';
-import { ComponentsModule } from './components/components.module';
 import { CustomFormsModule } from './components/forms/form.module';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { CountryPageComponent } from './pages/coutry-page/country-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,8 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     PersonalFormComponent,
     PersonalShowComponent,
     ToDoPageComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    CountryPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,14 +35,14 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-    ComponentsModule,
-    CustomFormsModule
+    CustomFormsModule,
   ],
   exports: [
     ContactFormComponent,
     ContactFormComponent,
     ProductFormComponent,
     ToDoPageComponent,
+    CountryPageComponent,
   ],
   bootstrap: [AppComponent],
 })

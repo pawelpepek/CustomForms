@@ -1,16 +1,19 @@
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
   FormGroupBuilder,
   FormGroupSchema,
-} from '../components/forms/models/FormGroupBuilder';
-import { ToastService } from '../components/forms/toast/toast-service';
-import { AppModule } from '../app.module';
-import { Alias } from '../components/forms/models/Alias';
-import { CopyObjectIntoObject, IsObjectsEquals } from '../helpers/Comparision';
-import { ConfirmService } from './confirm.service';
+} from '../../components/forms/models/FormGroupBuilder';
+import { ToastService } from '../../components/forms/toast/toast-service';
+import { AppModule } from '../../app.module';
+import { Alias } from '../../components/forms/models/Alias';
+import {
+  CopyObjectIntoObject,
+  IsObjectsEquals,
+} from '../../helpers/Comparision';
+import { ConfirmService } from '../confirm.service';
 
-export abstract class DataService<T> {
+export abstract class DataServiceBase<T> {
   protected myForm!: FormGroup;
   protected schema!: FormGroupSchema;
 
@@ -22,8 +25,7 @@ export abstract class DataService<T> {
   protected fetchInitMethod?: () => Observable<T | undefined>;
   protected fetchItemMethod?: (id: any) => Observable<T | undefined>;
   protected fetchItemsMethod?: () => Observable<T[]>;
-  protected updateItemMethod?: (data: T) => Observable<boolean>;
-  protected addItemMethod?: (data: T) => Observable<T>;
+
   protected deleteItemMethod?: (data: T) => Observable<boolean>;
 
   private fb: FormBuilder;
@@ -38,7 +40,6 @@ export abstract class DataService<T> {
     this.fb = AppModule.injector.get(FormBuilder);
     this.toastService = AppModule.injector.get(ToastService);
     this.confirmService = AppModule.injector.get(ConfirmService);
-
     this.selectedItem.subscribe(this.loadSelected);
   }
 
@@ -47,17 +48,20 @@ export abstract class DataService<T> {
 
   public value = (row: T, column: string) => `${(row as any)[column]}`;
   public columns = (): string[] => Object.keys(this.myForm.getRawValue());
-  public saveVisible = (): boolean => !!this.updateItemMethod;
   public reset = (): void => this.myForm.reset();
   public clearSelection = () => this.selectedItem.next(undefined);
-  public addButtonVisible = () =>
-    !!this.addItemMethod && !!this.updateItemMethod;
+
+  public saveVisible = (): boolean => this.isUpdateMethod();
+  public addButtonVisible = () => this.isAddMethod() && this.isUpdateMethod;
   public deleteButtonVisible = () => !!this.deleteItemMethod;
   public addNewButtonDisabled = () => !this.selectedItem.value;
   public saveButtonText = () =>
-    !!this.selectedItem.value || !this.addItemMethod
+    !!this.selectedItem.value || !this.isAddMethod()
       ? 'Zapisz zmiany'
-      : 'Dodaj nowy';
+      : 'Zapisz nowy';
+
+  protected abstract isAddMethod(): boolean;
+  protected abstract isUpdateMethod(): boolean;
 
   private loadSelected = (item: T | undefined) => {
     if (!this.myForm) return;
@@ -77,6 +81,12 @@ export abstract class DataService<T> {
       if (!!this.fetchInitMethod) {
         this.fetchInitMethod().subscribe((res) => {
           this.selectedItem.next(res);
+          this.loaded = false;
+        });
+      }
+      if (!!this.fetchItemsMethod) {
+        this.fetchItemsMethod().subscribe((items) => {
+          this.items.next(items);
           this.loaded = false;
         });
       }
@@ -108,7 +118,7 @@ export abstract class DataService<T> {
   public save = (formData: any): Observable<any> | null => {
     this.loaded = true;
 
-    return this.selectedItem.value == undefined && !!this.addItemMethod
+    return this.selectedItem.value == undefined && this.isAddMethod()
       ? this.add(formData)
       : this.update(formData);
   };
@@ -122,44 +132,34 @@ export abstract class DataService<T> {
     const data = formData as T;
     this.prepareItem(formData, data);
 
-    if (!!this.addItemMethod) {
-      return this.addItemMethod(formData).pipe(
-        tap((res) => {
-          if (res) {
-            this.finalizeSuccess(res);
-            this.items.next([...this.items.value, res]);
-          }
-        })
-      );
+    if (this.isAddMethod()) {
+      return this.addItem(data);
     }
 
     return this.finalizeError();
   };
+
+  protected abstract addItem(item: T): Observable<any> | null;
 
   private update = (formData: any): Observable<any> | null => {
     const dataFromForm = formData as T;
 
-    const data = !this.addItemMethod
+    const item = !this.isAddMethod()
       ? dataFromForm
       : CopyObjectIntoObject(dataFromForm, this.selectedItem.value) ??
         dataFromForm;
 
-    this.prepareItem(formData, data);
-    if (!!this.updateItemMethod) {
-      return this.updateItemMethod(formData).pipe(
-        tap((res) => {
-          if (res) {
-            this.replaceSelectedItem(data);
-            this.finalizeSuccess(data);
-          }
-        })
-      );
+    this.prepareItem(formData, item);
+    if (this.isUpdateMethod()) {
+      return this.updateItem(item);
     }
 
     return this.finalizeError();
   };
 
-  private finalizeSuccess(selectedItem: T): void {
+  protected abstract updateItem(item: T): Observable<any> | null;
+
+  protected finalizeSuccess(selectedItem: T): void {
     this.selectedItem.next(selectedItem);
     this.toastService.showToast('success', 'Dane zostały zapisane');
     this.loaded = false;
@@ -171,7 +171,7 @@ export abstract class DataService<T> {
     return null;
   }
 
-  private replaceSelectedItem(data: T | undefined) {
+  protected replaceSelectedItem(data: T | undefined) {
     const indexToReplace = this.items.value.findIndex((item) =>
       IsObjectsEquals(this.selectedItem.value, item)
     );

@@ -1,4 +1,4 @@
-import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { PersonalService } from '../../../services/personal.service';
 import { Person } from '../../../models/Person';
 

@@ -1,0 +1,9 @@
+<app-card label="Pełny model CRUD z odświeżeniem wszystkich">
+    <app-form [formGroup]="service.form" [service]="service" [clearButton]="true">
+        <div class="d-flex flex-row">
+            <app-input label="Nazwa" class="w-100 me-2" formControlName="name"></app-input>
+            <app-input label="Stolica" class="w-100 me-2" formControlName="capital"></app-input>
+        </div>
+    </app-form>
+    <app-table [service]="service"></app-table>
+</app-card>

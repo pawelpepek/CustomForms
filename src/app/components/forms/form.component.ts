@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ToastService } from './toast/toast-service';
-import { DataService } from '../../services/data.service';
-import { timeout } from 'rxjs';
+import { DataServiceBase } from '../../services/data.services/data.service.base';
 
 @Component({
   selector: 'app-form',
@@ -11,7 +10,7 @@ import { timeout } from 'rxjs';
 })
 export class FormComponent<T> {
   @Input() formGroup!: FormGroup;
-  @Input() service!: DataService<T>;
+  @Input() service!: DataServiceBase<T>;
   @Input() clearButton: boolean = false;
   @Input() refreshButton: boolean = false;
 

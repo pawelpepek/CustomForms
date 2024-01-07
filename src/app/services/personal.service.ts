@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
 import { CustomValidators } from '../components/forms/models/Validators';
-import { DataService } from './data.service';
+import { DataServiceLocal } from './data.services/data.service.local';
 import { Observable } from 'rxjs';
 import { Person } from '../models/Person';
 import { ModalService } from './modal.service';
-import { RequestService } from './requests.service';
 import { Positions } from '../data/Positions';
+import { PersonalRequestsService } from './requests/personal.requests.service';
 
 @Injectable({ providedIn: 'root' })
-export class PersonalService extends DataService<Person> {
+export class PersonalService extends DataServiceLocal<Person> {
   private formSchema: FormGroupSchema = {
     firstName: [CustomValidators.required],
     lastName: [CustomValidators.required],
@@ -24,11 +24,11 @@ export class PersonalService extends DataService<Person> {
 
   constructor(
     private ownModalService: ModalService,
-    private requestService: RequestService<Person>
+    private requestService: PersonalRequestsService
   ) {
     super();
     this.initSchema(this.formSchema);
-    this.updateItemMethod = this.updateItem;
+    this.updateItemMethod = this.updateItemRequest;
   }
 
   protected override prepareItem(formData: any, item: Person): void {
@@ -44,9 +44,9 @@ export class PersonalService extends DataService<Person> {
     return this.ownModalService;
   }
 
-  public updateItem = (data: Person): Observable<boolean> => {
+  public updateItemRequest = (item: Person): Observable<boolean> => {
     return this.requestService
-      .updateItem(data)
+      .updateItem(item)
       .pipe(this.modalService.modalTap('person'));
   };
 }

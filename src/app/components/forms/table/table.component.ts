@@ -1,14 +1,20 @@
-import { Component, Input } from '@angular/core';
-import { DataService } from '../../../services/data.service';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { IsObjectsEquals } from '../../../helpers/Comparision';
+import { DataServiceBase } from '../../../services/data.services/data.service.base';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
-export class TableComponent<T> {
-  @Input() service!: DataService<T>;
+export class TableComponent<T> implements AfterViewInit {
+  @Input() service!: DataServiceBase<T>;
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.service.load();
+    }, 10);
+  }
 
   public isRowSelected = (row: T) =>
     IsObjectsEquals(row, this.service.selectedItem.value);

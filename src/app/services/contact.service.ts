@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Contact } from '../models/Contact';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
 import { CustomValidators } from '../components/forms/models/Validators';
-import { DataService } from './data.service';
+import { DataServiceLocal } from './data.services/data.service.local';
 import { Observable } from 'rxjs';
 import { ModalService } from './modal.service';
-import { RequestService } from './requests.service';
+import { ContactRequestsService } from './requests/contact.requests.service';
 
 @Injectable({ providedIn: 'root' })
-export class ContactService extends DataService<Contact> {
+export class ContactService extends DataServiceLocal<Contact> {
   private formSchema: FormGroupSchema = {
     firstName: [CustomValidators.required],
     lastName: [CustomValidators.required],
@@ -17,20 +17,20 @@ export class ContactService extends DataService<Contact> {
 
   constructor(
     private ownModalService: ModalService,
-    private requestService: RequestService<Contact>
+    private requestService: ContactRequestsService
   ) {
     super();
     this.initSchema(this.formSchema);
-    this.updateItemMethod = this.updateItem;
+    this.updateItemMethod = this.updateItemRequest;
   }
 
   public get modalService() {
     return this.ownModalService;
   }
 
-  updateItem = (data: Contact): Observable<boolean> => {
+  updateItemRequest = (item: Contact): Observable<boolean> => {
     return this.requestService
-      .updateItem(data)
+      .updateItem(item)
       .pipe(this.modalService.modalTap('contact'));
   };
 }

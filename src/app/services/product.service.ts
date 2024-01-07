@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/Product';
-import { DataService } from './data.service';
+import { DataServiceLocal } from './data.services/data.service.local';
 import { CustomValidators } from '../components/forms/models/Validators';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
 import { Observable, delay, first, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class ProductService extends DataService<Product> {
+export class ProductService extends DataServiceLocal<Product> {
   private formSchema: FormGroupSchema = {
     name: [CustomValidators.required],
     code: [CustomValidators.required],
@@ -18,12 +18,12 @@ export class ProductService extends DataService<Product> {
   constructor() {
     super();
     this.initSchema(this.formSchema);
-    this.updateItemMethod = this.updateItem;
+    this.updateItemMethod = this.updateItemRequest;
     this.fetchInitMethod = this.fetchItem;
     this.load();
   }
 
-  updateItem = (data: Product): Observable<boolean> => {
+  updateItemRequest = (item: Product): Observable<boolean> => {
     return of(true).pipe(delay(500));
   };
 
