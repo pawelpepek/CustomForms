@@ -1,4 +1,4 @@
-<table class="table table-striped border rounded border-dark-subtle">
+<table class="table table-striped border rounded border-dark-subtle" [ngClass]="{disabled:service.loaded}">
     <thead>
         <tr>
             <th *ngFor="let column of service.tableAliases" scope="col" class="bg-primary-subtle">{{column.text}}</th>

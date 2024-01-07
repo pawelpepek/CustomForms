@@ -3,7 +3,7 @@ import { Product } from '../models/Product';
 import { DataService } from './data.service';
 import { CustomValidators } from '../components/forms/models/Validators';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
-import { Observable, delay, first, of, tap } from 'rxjs';
+import { Observable, delay, first, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService extends DataService<Product> {

@@ -9,3 +9,7 @@ tbody tr:hover > td {
 .selected-row > td {
   background-color: var(--bs-success-bg-subtle)
 }
+
+.disabled{
+  pointer-events:none;
+}

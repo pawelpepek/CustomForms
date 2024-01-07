@@ -53,6 +53,11 @@ export abstract class DataService<T> {
   public addButtonVisible = () =>
     !!this.addItemMethod && !!this.updateItemMethod;
   public deleteButtonVisible = () => !!this.deleteItemMethod;
+  public addNewButtonDisabled = () => !this.selectedItem.value;
+  public saveButtonText = () =>
+    !!this.selectedItem.value || !this.addItemMethod
+      ? 'Zapisz zmiany'
+      : 'Dodaj nowy';
 
   private loadSelected = (item: T | undefined) => {
     if (!this.myForm) return;

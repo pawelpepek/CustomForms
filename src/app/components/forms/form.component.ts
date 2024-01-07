@@ -2,10 +2,12 @@ import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ToastService } from './toast/toast-service';
 import { DataService } from '../../services/data.service';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
+  styles: `.disabled{  pointer-events:none;} `,
 })
 export class FormComponent<T> {
   @Input() formGroup!: FormGroup;
