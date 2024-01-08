@@ -10,7 +10,11 @@ export class ProductService extends DataServiceLocal<Product> {
   private formSchema: FormGroupSchema = {
     name: [CustomValidators.required],
     code: [CustomValidators.required],
-    price: [CustomValidators.required],
+    price: [
+      CustomValidators.required,
+      CustomValidators.minValue(0.01),
+      CustomValidators.maxValue(9999),
+    ],
   };
 
   private init = false;

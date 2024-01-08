@@ -4,13 +4,20 @@ import { CustomValidators } from '../components/forms/models/Validators';
 import { CountryRequestsService } from './requests/country.requests.service';
 import { DataServiceRefresh } from './data.services/data.service.refresh';
 import { Country } from '../models/Country';
-import { CountryAliases } from '../data/CountryAliases';
 
 @Injectable({ providedIn: 'root' })
 export class CountryService extends DataServiceRefresh<Country> {
   private formSchema: FormGroupSchema = {
-    name: [CustomValidators.required],
-    capital: [CustomValidators.required],
+    name: [
+      CustomValidators.required,
+      CustomValidators.minLength(2),
+      CustomValidators.maxLength(30),
+    ],
+    capital: [
+      CustomValidators.required,
+      CustomValidators.minLength(2),
+      CustomValidators.maxLength(20),
+    ],
   };
 
   constructor(private requestService: CountryRequestsService) {
@@ -23,6 +30,9 @@ export class CountryService extends DataServiceRefresh<Country> {
     this.deleteItemMethod = this.requestService.deleteItem;
     this.fetchItemsMethod = requestService.fetchItems;
 
-    this.tableAliases = CountryAliases.data;
+    this.tableAliases = [
+      { value: 'name', text: 'Państwo' },
+      { value: 'capital', text: 'Stolica' },
+    ];
   }
 }

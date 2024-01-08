@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, forwardRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  forwardRef,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputBaseComponent } from '../Input-base/input-base.component';
 
@@ -16,4 +22,7 @@ import { InputBaseComponent } from '../Input-base/input-base.component';
 })
 export class InputComponent
   extends InputBaseComponent
-  implements ControlValueAccessor, OnInit, AfterViewInit {}
+  implements ControlValueAccessor, OnInit, AfterViewInit
+{
+  @Input() type: 'text' | 'date' | 'email' | 'number' | 'time' = 'text';
+}

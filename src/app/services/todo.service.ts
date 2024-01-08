@@ -3,13 +3,13 @@ import { ToDo } from '../models/ToDo';
 import { DataServiceLocal } from './data.services/data.service.local';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
 import { CustomValidators } from '../components/forms/models/Validators';
-import { TodoAliases } from '../data/TodoAliases';
 import { TodoRequestsService } from './requests/todo.requests.service';
+import { Priorities } from '../data/Priorities';
 
 @Injectable({ providedIn: 'root' })
 export class ToDoService extends DataServiceLocal<ToDo> {
   private formSchema: FormGroupSchema = {
-    description: [CustomValidators.required],
+    description: [CustomValidators.required, CustomValidators.maxLength(30)],
     priority: [CustomValidators.required],
   };
 
@@ -22,6 +22,9 @@ export class ToDoService extends DataServiceLocal<ToDo> {
     this.deleteItemMethod = this.requestService.deleteItem;
     this.fetchItemsMethod = requestService.fetchItems;
 
-    this.tableAliases = TodoAliases.data;
+    this.tableAliases = [
+      { value: 'description', text: 'Zadanie' },
+      { value: 'priority', text: 'Priorytet', map: Priorities.data },
+    ];
   }
 }

@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, OperatorFunction, tap } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
   FormGroupBuilder,
@@ -46,7 +46,18 @@ export abstract class DataServiceBase<T> {
   protected prepareItem(formData: any, item: T): void {}
   protected prepareForm(formData: any, item: T): void {}
 
-  public value = (row: T, column: string) => `${(row as any)[column]}`;
+  public value = (row: T, column: string) => {
+    const value = (row as any)[column];
+
+    if (!!this.tableAliases) {
+      const alias = this.tableAliases.find((a) => a?.value == column);
+      if (!!alias && !!alias.map) {
+        const convertedValue = alias.map.find((m) => m.value == value);
+        return !!convertedValue ? convertedValue.text : `${value}`;
+      }
+    }
+    return `${value}`;
+  };
   public columns = (): string[] => Object.keys(this.myForm.getRawValue());
   public reset = (): void => this.myForm.reset();
   public clearSelection = () => this.selectedItem.next(undefined);
@@ -62,6 +73,9 @@ export abstract class DataServiceBase<T> {
 
   protected abstract isAddMethod(): boolean;
   protected abstract isUpdateMethod(): boolean;
+
+  protected abstract updateItem(item: T): Observable<any> | null;
+  protected abstract addItem(item: T): Observable<any> | null;
 
   private loadSelected = (item: T | undefined) => {
     if (!this.myForm) return;
@@ -96,29 +110,31 @@ export abstract class DataServiceBase<T> {
   public delete(row: T): void {
     this.confirmService
       .showModal('Czy na pewno usunąć zaznaczoną pozycję?')
-      .subscribe((answer) => {
-        if (answer && !!this.deleteItemMethod) {
-          this.loaded = true;
-          this.deleteItemMethod(row).subscribe({
-            next: (res) => {
-              if (res) {
-                this.items.next(
-                  this.items.value.filter((item) => !IsObjectsEquals(row, item))
-                );
-                this.selectedItem.next(undefined);
-                this.toastService.showToast('success', 'Dane zostały usunięte');
-                this.loaded = false;
-              } else {
-                this.finalizeError();
-              }
-            },
-            error: () => {
-              this.finalizeError();
-            },
-          });
-        }
-      });
+      .subscribe((answer) => this.deleteExact(answer, row));
   }
+
+  private deleteExact = (answer: boolean, row: T): void => {
+    if (answer && !!this.deleteItemMethod) {
+      this.loaded = true;
+      this.deleteItemMethod(row).subscribe({
+        next: (result) => this.deleteResult(result, row),
+        error: this.finalizeError,
+      });
+    }
+  };
+
+  private deleteResult = (result: boolean, row: T): void => {
+    if (result) {
+      this.items.next(
+        this.items.value.filter((item) => !IsObjectsEquals(row, item))
+      );
+      this.selectedItem.next(undefined);
+      this.toastService.showToast('success', 'Dane zostały usunięte');
+      this.loaded = false;
+    } else {
+      this.finalizeError();
+    }
+  };
 
   public save = (formData: any): Observable<any> | null => {
     this.loaded = true;
@@ -138,13 +154,11 @@ export abstract class DataServiceBase<T> {
     this.prepareItem(formData, data);
 
     if (this.isAddMethod()) {
-      return this.addItem(data);
+      return this.addItem(data)?.pipe(this.tapError()) ?? null;
     }
 
     return this.finalizeError();
   };
-
-  protected abstract addItem(item: T): Observable<any> | null;
 
   private update = (formData: any): Observable<any> | null => {
     const dataFromForm = formData as T;
@@ -156,13 +170,11 @@ export abstract class DataServiceBase<T> {
 
     this.prepareItem(formData, item);
     if (this.isUpdateMethod()) {
-      return this.updateItem(item);
+      return this.updateItem(item)?.pipe(this.tapError()) ?? null;
     }
 
     return this.finalizeError();
   };
-
-  protected abstract updateItem(item: T): Observable<any> | null;
 
   protected finalizeSuccess(selectedItem: T): void {
     this.selectedItem.next(selectedItem);
@@ -170,25 +182,21 @@ export abstract class DataServiceBase<T> {
     this.loaded = false;
   }
 
-  protected finalizeError(): null {
+  protected finalizeError = (): null => {
     this.toastService.showToast(
       'danger',
       'Wystąpił błąd. Dane nie zostały zapisane'
     );
     this.loaded = false;
     return null;
-  }
+  };
 
-  protected replaceSelectedItem(data: T | undefined) {
-    const indexToReplace = this.items.value.findIndex((item) =>
-      IsObjectsEquals(this.selectedItem.value, item)
-    );
-
-    if (indexToReplace >= 0) {
-      const items = [...this.items.value];
-      if (!!data) items[indexToReplace] = data;
-
-      this.items.next(items);
-    }
-  }
+  private tapError = (): OperatorFunction<any, any> => {
+    return (source: Observable<any>) =>
+      source.pipe(
+        tap({
+          error: this.finalizeError,
+        })
+      );
+  };
 }

@@ -1,4 +1,4 @@
-import { Observable, catchError, mergeMap, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { DataServiceBase } from './data.service.base';
 import { IsObjectsEquals } from '../../helpers/Comparision';
 
@@ -17,32 +17,29 @@ export abstract class DataServiceRefresh<T> extends DataServiceBase<T> {
   protected override addItem(item: T): Observable<any> | null {
     if (!this.addItemMethod) return null;
 
-    return this.addItemMethod(item).pipe(
-      tap((res) => {
-        if (res) {
-          this.items.next(res.items);
-          this.finalizeSuccess(res.item);
-        }
-      }),
-      tap(undefined, (error) => {
-        this.finalizeError();
-      })
-    );
+    return this.addItemMethod(item).pipe(tap(this.addResult));
   }
+
+  private addResult = (result: DataWithNewIem<T>) => {
+    if (result) {
+      this.items.next(result.items);
+      this.finalizeSuccess(result.item);
+    }
+  };
+
   protected override updateItem(item: T): Observable<any> | null {
     if (!this.updateItemMethod) return null;
 
     return this.updateItemMethod(item).pipe(
-      tap((res) => {
-        if (res) {
-          this.items.next(res);
-          const selectedItem = res.find((r) => IsObjectsEquals(item, r));
-          if (!!selectedItem) this.finalizeSuccess(selectedItem);
-        }
-      }),
-      tap(undefined, (error) => {
-        this.finalizeError();
-      })
+      tap((result) => this.updateResult(result, item))
     );
   }
+
+  private updateResult = (result: T[], item: T): void => {
+    if (result) {
+      this.items.next(result);
+      const selectedItem = result.find((r) => IsObjectsEquals(item, r));
+      if (!!selectedItem) this.finalizeSuccess(selectedItem);
+    }
+  };
 }
