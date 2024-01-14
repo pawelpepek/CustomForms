@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-button',
+  selector: 'xpp-button',
   template: `<button
     [disabled]="disabled"
     [class]="buttonClass"

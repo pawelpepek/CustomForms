@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ToastService } from './toast-service';
 
 @Component({
-  selector: 'app-toasts',
+  selector: 'xpp-toast',
   template: `
     @for (toast of toastService.toasts; track toast) {
     <ngb-toast

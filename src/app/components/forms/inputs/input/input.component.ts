@@ -9,7 +9,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputBaseComponent } from '../Input-base/input-base.component';
 
 @Component({
-  selector: 'app-input',
+  selector: 'xpp-input',
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
   providers: [

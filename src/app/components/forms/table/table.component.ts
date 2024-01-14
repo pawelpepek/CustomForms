@@ -3,7 +3,7 @@ import { IsObjectsEquals } from '../../../helpers/Comparision';
 import { DataServiceBase } from '../../../services/data.services/data.service.base';
 
 @Component({
-  selector: 'app-table',
+  selector: 'xpp-table',
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })

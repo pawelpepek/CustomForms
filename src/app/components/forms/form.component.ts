@@ -4,7 +4,7 @@ import { ToastService } from './toast/toast-service';
 import { DataServiceBase } from '../../services/data.services/data.service.base';
 
 @Component({
-  selector: 'app-form',
+  selector: 'xpp-form',
   templateUrl: './form.component.html',
   styles: `.disabled{  pointer-events:none;} `,
 })

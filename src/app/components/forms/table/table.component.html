@@ -10,7 +10,7 @@
             [ngClass]="{'selected-row':isRowSelected(row)}">
             <td *ngFor="let column of service.tableAliases">{{service.value(row, column.value)}}</td>
             <td *ngIf="service.deleteButtonVisible()">
-                <app-delete-button (delete)="onDelete(row)"></app-delete-button>
+                <xpp-delete-button (delete)="onDelete(row)"></xpp-delete-button>
             </td>
         </tr>
     </tbody>

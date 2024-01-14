@@ -10,11 +10,11 @@
 </ng-template>
 
 <app-card label="Prosty formularz">
-    <app-form [formGroup]="contactService.form" [service]="contactService">
+    <xpp-form [formGroup]="contactService.form" [service]="contactService">
         <div class="d-flex flex-column">
-            <app-input label="Imię" formControlName="firstName"></app-input>
-            <app-input label="Nazwisko" formControlName="lastName"></app-input>
-            <app-input label="Email" type="email" formControlName="email"></app-input>
+            <xpp-input label="Imię" formControlName="firstName"></xpp-input>
+            <xpp-input label="Nazwisko" formControlName="lastName"></xpp-input>
+            <xpp-input label="Email" type="email" formControlName="email"></xpp-input>
         </div>
-    </app-form>
+    </xpp-form>
 </app-card>

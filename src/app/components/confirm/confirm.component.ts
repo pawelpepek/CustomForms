@@ -7,7 +7,7 @@ import {
 import { ConfirmService } from '../../services/confirm.service';
 
 @Component({
-  selector: 'app-confirm',
+  selector: 'xpp-comfirm',
   templateUrl: './confirm.component.html',
 })
 export class ConfirmComponent implements AfterViewInit {

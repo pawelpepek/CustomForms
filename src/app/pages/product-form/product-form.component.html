@@ -1,11 +1,11 @@
 <app-card label="Formularz z wczytywaniem danych">
-    <app-form [formGroup]="productService.form" [service]="productService" [clearButton]="true" [refreshButton]="true">
+    <xpp-form [formGroup]="productService.form" [service]="productService" [clearButton]="true" [refreshButton]="true">
         <div class="d-flex flex-row">
             <div class="w-100">
-                <app-input label="Kod" formControlName="code"></app-input>
-                <app-input label="Nazwa" formControlName="name"></app-input>
-                <app-input label="Cena" type="number" formControlName="price"></app-input>
+                <xpp-input label="Kod" formControlName="code"></xpp-input>
+                <xpp-input label="Nazwa" formControlName="name"></xpp-input>
+                <xpp-input label="Cena" type="number" formControlName="price"></xpp-input>
             </div>
         </div>
-    </app-form>
+    </xpp-form>
 </app-card>

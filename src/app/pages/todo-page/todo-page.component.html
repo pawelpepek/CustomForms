@@ -1,10 +1,10 @@
 <app-card label="Model CRUD">
-    <app-form [formGroup]="service.form" [service]="service" [clearButton]="true">
+    <xpp-form [formGroup]="service.form" [service]="service" [clearButton]="true">
         <div class="d-flex flex-row">
-            <app-input label="Zadanie" class="w-100 me-2" formControlName="description"></app-input>
-            <app-select label="Priorytet" [style]="{ width: '200px' }" formControlName="priority"
-                [data]="priorities"></app-select>
+            <xpp-input label="Zadanie" class="w-100 me-2" formControlName="description"></xpp-input>
+            <xpp-select label="Priorytet" [style]="{ width: '200px' }" formControlName="priority"
+                [data]="priorities"></xpp-select>
         </div>
-    </app-form>
-    <app-table [service]="service"></app-table>
+    </xpp-form>
+    <xpp-table [service]="service"></xpp-table>
 </app-card>

@@ -10,20 +10,20 @@
 </ng-template>
 
 <app-card label="Formularz z zagnieżdżeniem i zdarzeniami">
-    <app-form [formGroup]="personalService.form" [service]="personalService">
+    <xpp-form [formGroup]="personalService.form" [service]="personalService">
         <div class="d-flex flex-row">
             <div class="me-2 w-100">
-                <app-input label="Imię" formControlName="firstName" (changed)="onChangedName($event)"></app-input>
-                <app-input label="Nazwisko" formControlName="lastName"></app-input>
-                <app-input label="Email" formControlName="email"></app-input>
-                <app-select label="Stanowisko" formControlName="position" [data]="positions"
-                    (changed)="onChangedList($event)"></app-select>
+                <xpp-input label="Imię" formControlName="firstName" (changed)="onChangedName($event)"></xpp-input>
+                <xpp-input label="Nazwisko" formControlName="lastName"></xpp-input>
+                <xpp-input label="Email" formControlName="email"></xpp-input>
+                <xpp-select label="Stanowisko" formControlName="position" [data]="positions"
+                    (changed)="onChangedList($event)"></xpp-select>
             </div>
             <div formGroupName="address" class="ms-2 w-100">
-                <app-input label="Kod pocztowy" formControlName="zip"></app-input>
-                <app-input label="Miejscowość" formControlName="city"></app-input>
-                <app-input label="Ulica" formControlName="street"></app-input>
+                <xpp-input label="Kod pocztowy" formControlName="zip"></xpp-input>
+                <xpp-input label="Miejscowość" formControlName="city"></xpp-input>
+                <xpp-input label="Ulica" formControlName="street"></xpp-input>
             </div>
         </div>
-    </app-form>
+    </xpp-form>
 </app-card>

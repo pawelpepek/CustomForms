@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-input-wrapper',
+  selector: 'xpp-input-wrapper',
   templateUrl: './input-wrapper.component.html',
   styleUrl: './input-wrapper.component.scss',
 })
