@@ -16,16 +16,12 @@ export class ContactService extends DataServiceLocal<Contact> {
   };
 
   constructor(
-    private ownModalService: ModalService,
+    private modalService: ModalService,
     private requestService: ContactRequestsService
   ) {
     super();
     this.initSchema(this.formSchema);
     this.updateItemMethod = this.updateItemRequest;
-  }
-
-  public get modalService() {
-    return this.ownModalService;
   }
 
   updateItemRequest = (item: Contact): Observable<boolean> => {

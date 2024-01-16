@@ -23,7 +23,7 @@ export class PersonalService extends DataServiceLocal<Person> {
   };
 
   constructor(
-    private ownModalService: ModalService,
+    private modalService: ModalService,
     private requestService: PersonalRequestsService
   ) {
     super();
@@ -38,10 +38,6 @@ export class PersonalService extends DataServiceLocal<Person> {
 
   protected override prepareForm(formData: any, item: Person): void {
     formData.position = item.position.value;
-  }
-
-  public get modalService() {
-    return this.ownModalService;
   }
 
   public updateItemRequest = (item: Person): Observable<boolean> => {

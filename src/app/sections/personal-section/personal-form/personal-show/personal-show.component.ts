@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { PersonalService } from '../../../services/personal.service';
-import { Person } from '../../../models/Person';
+import { PersonalService } from '../../../../services/personal.service';
+import { Person } from '../../../../models/Person';
 
 @Component({
   selector: 'app-personal-show',

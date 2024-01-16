@@ -1,0 +1,7 @@
+<app-modal [title]="title" name="contact">
+    <h5>{{contactService.selectedItem.value?.email}}</h5>
+</app-modal>
+
+<app-section-template label="Prosty formularz" [codeBlocks]="codeBlocks">
+    <app-contact-form></app-contact-form>
+</app-section-template>

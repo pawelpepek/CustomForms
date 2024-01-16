@@ -1,9 +1,0 @@
-<app-card label="Model CRUD z odświeżeniem wszystkich pozycji">
-    <xpp-form [formGroup]="service.form" [service]="service" [clearButton]="true">
-        <div class="d-flex flex-row">
-            <xpp-input label="Państwo" class="w-100 me-2" formControlName="name"></xpp-input>
-            <xpp-input label="Stolica" class="w-100 me-2" formControlName="capital"></xpp-input>
-        </div>
-    </xpp-form>
-    <xpp-table [service]="service"></xpp-table>
-</app-card>

@@ -1,0 +1,9 @@
+<xpp-form [formGroup]="productService.form" [service]="productService" [clearButton]="true" [refreshButton]="true">
+    <div class="d-flex flex-row">
+        <div class="w-100">
+            <xpp-input label="Kod" formControlName="code"></xpp-input>
+            <xpp-input label="Nazwa" formControlName="name"></xpp-input>
+            <xpp-input label="Cena" type="number" formControlName="price"></xpp-input>
+        </div>
+    </div>
+</xpp-form>

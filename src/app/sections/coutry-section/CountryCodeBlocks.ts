@@ -1,4 +1,41 @@
-import { Injectable } from '@angular/core';
+export const COUNTRY_CODE_BLOCKS=[
+    {
+      fileName: 'country-form.html',
+      code: `<xpp-form 
+  [formGroup]="service.form" 
+  [service]="service" 
+  [clearButton]="true">
+  <div class="d-flex flex-row">
+    <xpp-input 
+      label="Państwo" 
+      class="w-100 me-2" 
+      formControlName="name">
+    </xpp-input>
+    <xpp-input 
+      label="Stolica" 
+      class="w-100 me-2" 
+      formControlName="capital">
+    </xpp-input>
+  </div>
+</xpp-form>
+<xpp-table [service]="service"></xpp-table>`,
+    },
+    {
+      fileName: 'country-form.ts',
+      code: `import { Component } from '@angular/core';
+import { CountryService } from '../../../services/country.service';
+
+@Component({
+  selector: 'app-country-form',
+  templateUrl: './country-form.component.html',
+})
+export class CountryFormComponent {
+  constructor(public service: CountryService) {}
+}`,
+    },
+    {
+      fileName: 'country.service.ts',
+      code: `import { Injectable } from '@angular/core';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
 import { CustomValidators } from '../components/forms/models/Validators';
 import { CountryRequestsService } from './requests/country.requests.service';
@@ -34,4 +71,6 @@ export class CountryService extends DataServiceRefresh<Country> {
       { value: 'capital', text: 'Stolica' },
     ];
   }
-}
+}`,
+    },
+  ];

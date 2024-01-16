@@ -1,0 +1,7 @@
+<xpp-form [formGroup]="contactService.form" [service]="contactService">
+    <div class="d-flex flex-column">
+        <xpp-input label="Imię" formControlName="firstName"></xpp-input>
+        <xpp-input label="Nazwisko" formControlName="lastName"></xpp-input>
+        <xpp-input label="Email" type="email" formControlName="email"></xpp-input>
+    </div>
+</xpp-form>

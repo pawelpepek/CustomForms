@@ -1,0 +1,8 @@
+<app-card label="Implementacja" class="w-100" className="h-100">
+    <mat-tab-group>
+        <mat-tab *ngFor="let tab of codeBlocks">
+            <ng-template mat-tab-label>{{tab.fileName}}</ng-template>
+            <app-code [code]="tab.code"></app-code>
+        </mat-tab>
+    </mat-tab-group>
+</app-card>

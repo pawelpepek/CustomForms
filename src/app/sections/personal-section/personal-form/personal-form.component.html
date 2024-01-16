@@ -1,0 +1,16 @@
+<xpp-form [formGroup]="personalService.form" [service]="personalService">
+    <div class="d-flex flex-row">
+        <div class="me-2 w-100">
+            <xpp-input label="Imię" formControlName="firstName" (changed)="onChangedName($event)"></xpp-input>
+            <xpp-input label="Nazwisko" formControlName="lastName"></xpp-input>
+            <xpp-input label="Email" formControlName="email"></xpp-input>
+            <xpp-select label="Stanowisko" formControlName="position" [data]="positions"
+                (changed)="onChangedList($event)"></xpp-select>
+        </div>
+        <div formGroupName="address" class="ms-2 w-100">
+            <xpp-input label="Kod pocztowy" formControlName="zip"></xpp-input>
+            <xpp-input label="Miejscowość" formControlName="city"></xpp-input>
+            <xpp-input label="Ulica" formControlName="street"></xpp-input>
+        </div>
+    </div>
+</xpp-form>
