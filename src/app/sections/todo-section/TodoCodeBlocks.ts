@@ -1,7 +1,7 @@
-export const TODO_CODE_BLOCKS=[
-    {
-      fileName: 'todo-form.component.html',
-      code: `<xpp-form 
+export const TODO_CODE_BLOCKS = [
+  {
+    fileName: 'todo-form.component.html',
+    code: `<xpp-form 
   [formGroup]="service.form" 
   [service]="service" 
   [clearButton]="true">
@@ -20,10 +20,10 @@ export const TODO_CODE_BLOCKS=[
   </div>
 </xpp-form>
 <xpp-table [service]="service"></xpp-table>`,
-    },
-    {
-      fileName: 'todo-form.component.ts',
-      code: `import { Component } from '@angular/core';
+  },
+  {
+    fileName: 'todo-form.component.ts',
+    code: `import { Component } from '@angular/core';
 import { ToDoService } from '../../services/todo.service';
 import { Priorities } from '../../data/Priorities';
 
@@ -36,21 +36,24 @@ export class ToDoPageComponent {
 
   constructor(public service: ToDoService) {}
 }`,
-    },
-    {
-      fileName: 'todo.service.ts',
-      code: `import { Injectable } from '@angular/core';
+  },
+  {
+    fileName: 'todo.service.ts',
+    code: `import { Injectable } from '@angular/core';
 import { ToDo } from '../models/ToDo';
 import { DataServiceLocal } from './data.services/data.service.local';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
-import { CustomValidators } from '../components/forms/models/Validators';
 import { TodoRequestsService } from './requests/todo.requests.service';
 import { Priorities } from '../data/Priorities';
+import {
+  CustomValidators,
+  TextValidators,
+} from '../components/forms/models/Validators';
 
 @Injectable({ providedIn: 'root' })
 export class ToDoService extends DataServiceLocal<ToDo> {
   private formSchema: FormGroupSchema = {
-    description: [CustomValidators.required, CustomValidators.maxLength(30)],
+    description: [CustomValidators.required, TextValidators.maxLength(30)],
     priority: [CustomValidators.required],
   };
 
@@ -69,5 +72,5 @@ export class ToDoService extends DataServiceLocal<ToDo> {
     ];
   }
 }`,
-    },
-  ];
+  },
+];

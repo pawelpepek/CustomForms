@@ -12,6 +12,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgTemplateOutlet } from '@angular/common';
 import { TableComponent } from './table/table.component';
 import { DeleteButtonComponent } from './table/delete-button/delete-button.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DeleteButtonComponent } from './table/delete-button/delete-button.compo
     InputWrapperComponent,
     ToastsContainer,
     TableComponent,
-    DeleteButtonComponent
+    DeleteButtonComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,14 @@ import { DeleteButtonComponent } from './table/delete-button/delete-button.compo
     NgbToastModule,
     NgTemplateOutlet,
   ],
-  exports: [FormComponent, ButtonComponent, InputComponent, SelectComponent, TableComponent],
+  exports: [
+    FormComponent,
+    ButtonComponent,
+    InputComponent,
+    SelectComponent,
+    TableComponent,
+    ConfirmComponent,
+  ],
   providers: [],
 })
 export class CustomFormsModule {}

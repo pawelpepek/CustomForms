@@ -43,9 +43,13 @@ export class ProductFormComponent {
     code: `import { Injectable } from '@angular/core';
 import { Product } from '../models/Product';
 import { DataServiceLocal } from './data.services/data.service.local';
-import { CustomValidators } from '../components/forms/models/Validators';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
-import { Observable, delay, first, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { ProductRequestsService } from './requests/product.requests.service';
+import {
+    CustomValidators,
+    NumberValidators,
+} from '../components/forms/models/Validators';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService extends DataServiceLocal<Product> {
@@ -54,34 +58,21 @@ export class ProductService extends DataServiceLocal<Product> {
         code: [CustomValidators.required],
         price: [
             CustomValidators.required,
-            CustomValidators.minValue(0.01),
-            CustomValidators.maxValue(9999),
+            NumberValidators.minValue(0.01),
+            NumberValidators.maxValue(9999),
         ],
     };
 
-    private init = false;
-
-    constructor() {
+    constructor(private productRequestService: ProductRequestsService) {
         super();
         this.initSchema(this.formSchema);
-        this.updateItemMethod = this.updateItemRequest;
+        this.updateItemMethod = this.productRequestService.updateItemRequest;
         this.fetchInitMethod = this.fetchItem;
         this.load();
     }
 
-    updateItemRequest = (item: Product): Observable<boolean> => of(true).pipe(delay(500));
-
-    fetchItem = (): Observable<Product | undefined> => {
-        if (this.init) return of(this.selectedItem.value).pipe(delay(500), first());
-        else {
-            this.init = true;
-            return of({
-                name: 'Odkurzacz',
-                code: 'od0002',
-                price: 560,
-            }).pipe(delay(1000), first());
-        }
-    };
+    fetchItem = (): Observable<Product | undefined> =>
+        this.productRequestService.fetchItem(this.selectedItem.value);
 }`,
   },
 ];

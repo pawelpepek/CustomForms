@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
-import { CustomValidators } from '../components/forms/models/Validators';
 import { CountryRequestsService } from './requests/country.requests.service';
 import { DataServiceRefresh } from './data.services/data.service.refresh';
 import { Country } from '../models/Country';
+import {
+  CustomValidators,
+  TextValidators,
+} from '../components/forms/models/Validators';
 
 @Injectable({ providedIn: 'root' })
 export class CountryService extends DataServiceRefresh<Country> {
   private formSchema: FormGroupSchema = {
     name: [
       CustomValidators.required,
-      CustomValidators.minLength(2),
-      CustomValidators.maxLength(30),
+      TextValidators.minLength(2),
+      TextValidators.maxLength(30),
     ],
     capital: [
       CustomValidators.required,
-      CustomValidators.minLength(2),
-      CustomValidators.maxLength(20),
+      TextValidators.minLength(2),
+      TextValidators.maxLength(20),
     ],
   };
 

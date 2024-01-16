@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
 import { FormGroupSchema } from '../components/forms/models/FormGroupBuilder';
-import { CustomValidators } from '../components/forms/models/Validators';
 import { DataServiceLocal } from './data.services/data.service.local';
 import { Observable } from 'rxjs';
 import { Person } from '../models/Person';
 import { ModalService } from './modal.service';
 import { Positions } from '../data/Positions';
 import { PersonalRequestsService } from './requests/personal.requests.service';
+import {
+  CustomValidators,
+  TextValidators,
+} from '../components/forms/models/Validators';
 
 @Injectable({ providedIn: 'root' })
 export class PersonalService extends DataServiceLocal<Person> {
   private formSchema: FormGroupSchema = {
     firstName: [CustomValidators.required],
     lastName: [CustomValidators.required],
-    email: [CustomValidators.email, CustomValidators.required],
+    email: [TextValidators.email, CustomValidators.required],
     position: [CustomValidators.required],
     address: {
       street: [CustomValidators.required],
       city: [CustomValidators.required],
-      zip: [CustomValidators.required, CustomValidators.maxLength(6)],
+      zip: [CustomValidators.required, TextValidators.maxLength(6)],
     },
   };
 

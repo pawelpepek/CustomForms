@@ -4,7 +4,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { ConfirmService } from '../../services/confirm.service';
+import { ConfirmService } from '../../../services/confirm.service';
 
 @Component({
   selector: 'xpp-comfirm',
