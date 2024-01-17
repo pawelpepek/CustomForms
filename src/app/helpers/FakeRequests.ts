@@ -1,4 +1,4 @@
-import { Observable, delay, of } from 'rxjs';
+import { Observable, delay, of, throwError } from 'rxjs';
 import { IsObjectsEquals } from './Comparision';
 import { AppModule } from '../app.module';
 import { HttpClient } from '@angular/common/http';
@@ -83,11 +83,20 @@ export class FakeRequests<T> {
     return false;
   };
 
+
   private returnMethodOrError = <S>(item: T, method: S) => {
     return this.isError(item)
-      ? (this.http.get<T>('/weatherforecast') as S)
+      ?  this.errorMethod("Nie zapisać tekstu 'error'.") as S
       : method;
   };
 
-  private error = <S>() => this.http.get<S>('/weatherforecast');
+  private error=<S>(): Observable<S> => this.errorMethod("Nie można usunąć tej pozycji.")
+
+  private errorMethod<S>(message: string): Observable<S> {
+    const error = new Error('Forbidden');
+    (error as any).status = 403;
+    (error as any).message = message;
+
+    return throwError(() => error);
+  }
 }

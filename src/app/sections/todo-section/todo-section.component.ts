@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ToDoService } from '../../services/todo.service';
 
 import { CodeBlock } from '../../components/code-tabs/CodeBlock';
 import { TODO_CODE_BLOCKS } from './TodoCodeBlocks';

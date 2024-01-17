@@ -19,7 +19,7 @@ export class PersonalService extends DataServiceLocal<Person> {
     email: [TextValidators.email, CustomValidators.required],
     position: [CustomValidators.required],
     address: {
-      street: [CustomValidators.required],
+      street: [],
       city: [CustomValidators.required],
       zip: [CustomValidators.required, TextValidators.maxLength(6)],
     },

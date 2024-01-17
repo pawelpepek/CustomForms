@@ -1,0 +1,10 @@
+@import "bootstrap/scss/bootstrap";
+
+.text-highlight {
+  font-weight:500;
+  @extend .text-success;
+}
+
+p{
+    text-align: justify;
+}

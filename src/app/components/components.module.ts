@@ -12,6 +12,8 @@ import { CodeComponent } from './code-tabs/code/code.component';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { SectionTemplateComponent } from './section-template/section-template.component';
 import { ModalComponent } from './modal/modal.component';
+import { ArticleComponent } from './article/article.component';
+import {GithubComponent} from './github/github.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { ModalComponent } from './modal/modal.component';
     CodeComponent,
     SectionTemplateComponent,
     ModalComponent,
+    ArticleComponent,
+    GithubComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +39,8 @@ import { ModalComponent } from './modal/modal.component';
     SectionTemplateComponent,
     ModalComponent,
     CustomFormsModule,
+    ArticleComponent,
+    GithubComponent
   ],
   providers: [
     {

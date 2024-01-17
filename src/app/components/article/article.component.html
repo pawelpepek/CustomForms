@@ -1,0 +1,38 @@
+<div class="d-flex flex-column align-items-center mb-4 text-success">
+    <br />
+    <h1>Custom Forms</h1>
+</div>
+
+<section class="row">
+    <p class="col-12 w-100">
+        Projekt przedstawia sposób implementacji i wykorzystania niestandardowych kontrolek formularza z
+        wykorzystaniem <span class="text-highlight">Angular ReativeForms</span>.
+    </p>
+    <p class="col-12 w-100">
+        Założeniem było stworzenie całkiem rozbudowanych kontrolek, które mogą być obsługiwane tak jak zwykłe
+        kontrolki html. Tak by ograniczyć wielkość kodu oraz zwiększyć jego czytelność. Kontrolki zawierają domyślny
+        styl oraz obsługę wyświetlania błędów walidacji. Lista
+        rozwijana ma zaimplementowaną logikę wyświetlania pozycji. Do tego projektu zostały użyte kontrolki
+        Bootstrapa, ale z powodzeniem można użyć innych np. Material, PrimeNg.
+        Do stworzenia obiektu <span class="text-highlight">FormGroup</span> używam tutaj uproszczonego schematu <span
+            class="text-highlight">FormGroupSchema</span>, który dla każdej nazwy
+        zmiennej ma określony zestaw walidatorów. Walidatory są to funkcje, które zwracają typ <span
+            class="text-highlight">ValidationErrors</span>, tak
+        jak to jest w standardowej implementacji walidatorów ReactiveForms, z tą różnicą, że walidator w tym modelu
+        powinien posiadać własność <span class="text-highlight">message</span>.
+    </p>
+    <p class="col-12 w-100">
+        Dodatkowo stworzone zostały serwisy, które obsługują typowe operacje na encjach CRUD. Wystarczy podpiąć akcje do
+        odpowiednich metod w serwisie i formatka wyświetli odpowiednie przyciski.
+    </p>
+    <p class="col-12 w-100">
+        Pełny model CRUD zawiera także tabelę, w której można wybierać pozycje do modyfikacji lub do usunięcia.
+    </p>
+    <p class="col-12 w-100">
+        Zaimplementowana została obsługa błędów wykonania requestu do API. Do prezentacji tego mechanizmu w
+        klasie <span class="text-highlight">FakeRequests</span> zaimplementowany został mechanizm, który zwraca błąd w
+        przypadku próby usunięcia każdego wiersza z id równym <span class="text-highlight">2</span> oraz podczas próby
+        zapisu nowej pozycji lub aktualizacji
+        dotychczasowej z jakimkolwiek polem równym <span class="text-highlight">error</span>.
+    </p>
+</section>

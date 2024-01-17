@@ -25,6 +25,7 @@ export class TextValidators {
     control: AbstractControl
   ): ValidationErrors | null => {
     const value = control.value + '';
+
     const result = getErrorMessage(
       value && value.length > length,
       `Długość tekstu pola "{field}" nie może być większa niż ${length}`
@@ -38,6 +39,7 @@ export class TextValidators {
     control: AbstractControl
   ): ValidationErrors | null => {
     const value = control.value + '';
+
     const result = getErrorMessage(
       value && value.length < length,
       `Długość tekstu pola "{field}" nie może być mniejsza niż ${length}`

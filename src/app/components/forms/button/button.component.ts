@@ -25,7 +25,7 @@ export class ButtonComponent {
   @Output() onClick = new EventEmitter();
 
   get buttonClass(): string {
-    return `btn btn-${this.color} w-100`;
+    return `btn btn-${this.color} w-100 px-1`;
   }
 
   makeClick = (): void => this.onClick?.emit();

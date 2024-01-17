@@ -182,11 +182,10 @@ export abstract class DataServiceBase<T> {
     this.loaded = false;
   }
 
-  protected finalizeError = (): null => {
-    this.toastService.showToast(
-      'danger',
-      'Wystąpił błąd. Dane nie zostały zapisane'
-    );
+  protected finalizeError = (response: any = undefined): null => {
+    const message = `Wystąpił błąd. ${response?.message}`;
+
+    this.toastService.showToast('danger', message.trim());
     this.loaded = false;
     return null;
   };
