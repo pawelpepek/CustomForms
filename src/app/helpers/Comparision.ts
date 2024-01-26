@@ -14,8 +14,12 @@ export function CopyObjectIntoObject<T>(source: any, target: T): T {
 
   keys.forEach((key) => {
     const value = source[key];
-    if (value !== null && value !== undefined) {
-      newObject[key] = value;
+    if (typeof value === 'object' && !!value) {
+      CopyObjectIntoObject(value, newObject[key]);
+    } else {
+      if (value !== null && value !== undefined) {
+        newObject[key] = value;
+      }
     }
   });
   return newObject as T;
